@@ -17,7 +17,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
     <div className="border rounded-lg p-4 mb-4">
       <figure>
         <Image
-          className="rounded-t-lg"
+          className="rounded-t-lg w-full h-600"
           src={product.image}
           alt=""
           width={300}
