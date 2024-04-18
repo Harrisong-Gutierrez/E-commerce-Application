@@ -1,10 +1,12 @@
 "use client";
 
-import { Product } from "@/utils/supabase/types";
 import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import ShoppingCart from "./ShoppingCart";
 import { getProducts } from "@/app/services/productCalls";
+import { Product } from "@/utils/supabase/types";
+import { Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Main: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,7 +26,27 @@ const Main: React.FC = () => {
   }, []);
 
   const addToCart = (product: Product) => {
-    setCart([...cart, product]);
+    const isProductInCart = cart.some((item) => item.id === product.id);
+    if (!isProductInCart) {
+      setCart([...cart, product]);
+    } else {
+      toast.warn("The product is already in the cart.!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }
+  };
+
+  const removeFromCart = (productId: string) => {
+    const updatedCart = cart.filter((product) => product.id !== productId);
+    setCart(updatedCart);
   };
 
   return (
@@ -35,7 +57,7 @@ const Main: React.FC = () => {
           <ProductList products={products} onAddToCart={addToCart} />
         </div>
         <div className="md:col-span-1">
-          <ShoppingCart cart={cart} />
+          <ShoppingCart cart={cart} onRemoveFromCart={removeFromCart} />
         </div>
       </div>
     </div>
