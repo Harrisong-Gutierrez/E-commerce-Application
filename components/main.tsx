@@ -29,8 +29,19 @@ const Main: React.FC = () => {
     const isProductInCart = cart.some((item) => item.id === product.id);
     if (!isProductInCart) {
       setCart([...cart, product]);
+      toast.success("the product was added to the shopping cart!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
     } else {
-      toast.warn("The product is already in the cart.!", {
+      toast.warn("The product is already in the cart!", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
