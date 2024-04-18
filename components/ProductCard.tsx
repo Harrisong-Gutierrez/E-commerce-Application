@@ -10,7 +10,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   const handleClick = () => {
     onAddToCart(product);
-    console.log(product.available);
   };
 
   return (
