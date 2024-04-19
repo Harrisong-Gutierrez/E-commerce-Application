@@ -42,8 +42,10 @@ const Main: React.FC = () => {
       const randomId: string = uuidv4();
       const userId = await getUser();
 
-      addShoppingCart({ id: randomId, user_id: userId });
-      setHasAddedToCart(true);
+      if (userId) {
+        addShoppingCart({ id: randomId, user_id: userId });
+        setHasAddedToCart(true);
+      }
     }
 
     const isProductInCart = cart.some((item) => item.id === product.id);
