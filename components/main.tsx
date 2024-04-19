@@ -7,10 +7,22 @@ import { getProducts } from "@/app/services/productCalls";
 import { Product } from "@/utils/supabase/types";
 import { Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { createClient } from "@/utils/supabase/client";
+import { addShoppingCart } from "@/app/services/shoppingCartCalls";
+import { v4 as uuidv4 } from "uuid";
 
 const Main: React.FC = () => {
+  const supabase = createClient();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
+
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user?.id as string;
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,7 +37,11 @@ const Main: React.FC = () => {
     fetchProducts();
   }, []);
 
-  const addToCart = (product: Product) => {
+  const addToCart = async (product: Product) => {
+    const randomId: string = uuidv4();
+    const userId = await getUser();
+
+    addShoppingCart({ id: randomId, user_id: userId });
     const isProductInCart = cart.some((item) => item.id === product.id);
     if (!isProductInCart) {
       setCart([...cart, product]);

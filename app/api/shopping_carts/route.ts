@@ -30,8 +30,8 @@ export const GET = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
     try {
-        const { id, user_id, creation_date } = await request.json();
-        const { data: carts, error } = await supabase.from("shopping_carts").insert([{ id, user_id, creation_date }]);
+        const { id, user_id } = await request.json();
+        const { data: carts, error } = await supabase.from("shopping_carts").insert([{ id, user_id }]);
         if (error) {
             console.error("Error adding carts:", error.message);
             return NextResponse.json(
