@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import ShoppingCart from "./ShoppingCart";
@@ -16,6 +15,7 @@ const Main: React.FC = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
+  const [hasAddedToCart, setHasAddedToCart] = useState<boolean>(false);
 
   const getUser = async () => {
     const {
@@ -38,10 +38,14 @@ const Main: React.FC = () => {
   }, []);
 
   const addToCart = async (product: Product) => {
-    const randomId: string = uuidv4();
-    const userId = await getUser();
+    if (!hasAddedToCart) {
+      const randomId: string = uuidv4();
+      const userId = await getUser();
 
-    addShoppingCart({ id: randomId, user_id: userId });
+      addShoppingCart({ id: randomId, user_id: userId });
+      setHasAddedToCart(true);
+    }
+
     const isProductInCart = cart.some((item) => item.id === product.id);
     if (!isProductInCart) {
       setCart([...cart, product]);
