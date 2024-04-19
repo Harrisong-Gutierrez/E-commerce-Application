@@ -9,6 +9,17 @@ export interface ProductData {
 
 
 
+// export const getShoppingCart = async (productData: ProductData) => {
+//     try {
+//         const response = await axios.get(`/api/shopping_carts`, productData);
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error adding Shopping Carts:', error);
+//         throw error;
+//     }
+// }
+
+
 
 
 export const addShoppingCart = async (productData: ProductData) => {

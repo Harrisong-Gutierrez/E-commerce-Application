@@ -49,6 +49,7 @@ const Main: React.FC = () => {
     }
 
     const isProductInCart = cart.some((item) => item.id === product.id);
+
     if (!isProductInCart) {
       setCart([...cart, product]);
       toast.success("the product was added to the shopping cart!", {
@@ -75,6 +76,9 @@ const Main: React.FC = () => {
         transition: Bounce,
       });
     }
+
+    const idActualProduct: string = product.id;
+    return idActualProduct;
   };
 
   const removeFromCart = (productId: string) => {
