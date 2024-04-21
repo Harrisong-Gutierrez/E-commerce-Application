@@ -37,6 +37,13 @@ const Main: React.FC = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const hasAddedToCartStorage = localStorage.getItem("hasAddedToCart");
+    if (hasAddedToCartStorage) {
+      setHasAddedToCart(true);
+    }
+  }, []);
+
   const addToCart = async (product: Product) => {
     if (!hasAddedToCart) {
       const randomId: string = uuidv4();
@@ -45,6 +52,7 @@ const Main: React.FC = () => {
       if (userId) {
         addShoppingCart({ id: randomId, user_id: userId });
         setHasAddedToCart(true);
+        localStorage.setItem("hasAddedToCart", "true");
       }
     }
 
