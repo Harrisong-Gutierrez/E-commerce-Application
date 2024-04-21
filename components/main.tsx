@@ -37,6 +37,7 @@ const Main: React.FC = () => {
     fetchProducts();
   }, []);
 
+
   useEffect(() => {
     const hasAddedToCartStorage = localStorage.getItem("hasAddedToCart");
     if (hasAddedToCartStorage) {
