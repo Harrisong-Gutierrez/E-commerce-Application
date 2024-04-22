@@ -41,15 +41,18 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
           >
             Payment Method:
           </label>
-          <input
-            type="text"
+          <select
             id="paymentMethod"
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your payment method"
             required
-          />
+          >
+            <option value="">Select a payment method</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Bitcoin">Bitcoin</option>
+          </select>
         </div>
         <div className="flex justify-between">
           <button
