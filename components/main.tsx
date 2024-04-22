@@ -5,7 +5,7 @@ import ProductList from "./ProductList";
 import ShoppingCart from "./ShoppingCart";
 import CheckoutProcess from "./CheckoutProcess";
 import { getProducts } from "@/app/services/productCalls";
-import { Product } from "@/utils/supabase/types";
+import { Order, Product } from "@/utils/supabase/types";
 import { Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createClient } from "@/utils/supabase/client";
@@ -112,6 +112,10 @@ const Main: React.FC = () => {
     setIsCheckoutOpen(false);
   };
 
+  function handleOrderComplete(order: Order): void {
+    console.log("Pedido completado:", order);
+  }
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">E-Commerce App</h1>
@@ -123,8 +127,8 @@ const Main: React.FC = () => {
           {isCheckoutOpen ? (
             <CheckoutProcess
               cart={cart}
-              address="Dirección de envío simulada"
               onClose={closeCheckout}
+              onOrderComplete={handleOrderComplete}
             />
           ) : (
             <ShoppingCart
