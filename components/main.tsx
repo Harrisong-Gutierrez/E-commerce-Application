@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import ShoppingCart from "./ShoppingCart";
+import CheckoutProcess from "./CheckoutProcess";
 import { getProducts } from "@/app/services/productCalls";
 import { Product } from "@/utils/supabase/types";
 import { Bounce, toast } from "react-toastify";
@@ -16,6 +18,7 @@ const Main: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
   const [hasAddedToCart, setHasAddedToCart] = useState<boolean>(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
 
   const getUser = async () => {
     const {
@@ -101,6 +104,14 @@ const Main: React.FC = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
+  const openCheckout = () => {
+    setIsCheckoutOpen(true);
+  };
+
+  const closeCheckout = () => {
+    setIsCheckoutOpen(false);
+  };
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">E-Commerce App</h1>
@@ -109,7 +120,19 @@ const Main: React.FC = () => {
           <ProductList products={products} onAddToCart={addToCart} />
         </div>
         <div className="md:col-span-1">
-          <ShoppingCart cart={cart} onRemoveFromCart={removeFromCart} />
+          {isCheckoutOpen ? (
+            <CheckoutProcess
+              cart={cart}
+              address="Dirección de envío simulada"
+              onClose={closeCheckout}
+            />
+          ) : (
+            <ShoppingCart
+              cart={cart}
+              onRemoveFromCart={removeFromCart}
+              onCheckout={openCheckout}
+            />
+          )}
         </div>
       </div>
     </div>
