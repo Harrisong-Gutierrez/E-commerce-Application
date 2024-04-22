@@ -37,6 +37,12 @@ const Main: React.FC = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
 
   useEffect(() => {
     const hasAddedToCartStorage = localStorage.getItem("hasAddedToCart");
@@ -86,13 +92,13 @@ const Main: React.FC = () => {
       });
     }
 
-    const idActualProduct: string = product.id;
-    return idActualProduct;
+    localStorage.setItem("cart", JSON.stringify([...cart, product]));
   };
 
   const removeFromCart = (productId: string) => {
     const updatedCart = cart.filter((product) => product.id !== productId);
     setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   return (
