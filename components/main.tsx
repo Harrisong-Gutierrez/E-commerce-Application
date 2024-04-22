@@ -125,11 +125,7 @@ const Main: React.FC = () => {
         </div>
         <div className="md:col-span-1">
           {isCheckoutOpen ? (
-            <CheckoutProcess
-              cart={cart}
-              onClose={closeCheckout}
-              onOrderComplete={handleOrderComplete}
-            />
+            <CheckoutProcess cart={cart} onClose={closeCheckout} />
           ) : (
             <ShoppingCart
               cart={cart}
