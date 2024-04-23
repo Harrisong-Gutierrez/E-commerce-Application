@@ -6,7 +6,7 @@ interface Order {
   products: Product[];
   shippingAddress: string;
   paymentMethod: string;
-  status: string; // Puedes agregar más estados según tu necesidad
+  status: string;
 }
 
 interface OrderProps {

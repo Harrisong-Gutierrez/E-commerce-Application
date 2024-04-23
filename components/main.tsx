@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { createClient } from "@/utils/supabase/client";
 import { addShoppingCart } from "@/app/services/shoppingCartCalls";
 import { v4 as uuidv4 } from "uuid";
+import { addPurchaseHistory } from "@/app/services/purchaseHistoryCalls";
 
 const Main: React.FC = () => {
   const supabase = createClient();
@@ -63,6 +64,23 @@ const Main: React.FC = () => {
         addShoppingCart({ id: randomId, user_id: userId });
         setHasAddedToCart(true);
         localStorage.setItem("hasAddedToCart", "true");
+      }
+    }
+    const userId = await getUser();
+
+    const purchaseData = {
+      id: "5da61fb2-8caa-4163-8e5d-4873a5b4db11",
+      user_id: "5ef30832-4d1d-4f0d-9e4f-f479ff950372",
+      product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
+      purchase_date: "70294d63-be7f-47de-902c-c1a612c363cf",
+    };
+
+    if (userId) {
+      try {
+        const result = await addPurchaseHistory(purchaseData);
+        console.log("Purchase history added successfully:", result);
+      } catch (error) {
+        console.error("Failed to add purchase history:", error);
       }
     }
 
