@@ -9,7 +9,10 @@ import { Order, Product } from "@/utils/supabase/types";
 import { Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createClient } from "@/utils/supabase/client";
-import { addShoppingCart } from "@/app/services/shoppingCartCalls";
+import {
+  addShoppingCart,
+  getShoppingCarts,
+} from "@/app/services/shoppingCartCalls";
 import { v4 as uuidv4 } from "uuid";
 import { addCartDetails } from "@/app/services/cartDetailsCalls";
 
@@ -72,11 +75,21 @@ const Main: React.FC = () => {
     if (!isProductInCart) {
       setCart([...cart, product]);
       const userId = await getUser();
-      const currentDate: Date = new Date();
+
+      const getCartId = async () => {
+        try {
+          const result = await getShoppingCarts();
+          return result[0].id;
+        } catch (error) {
+          console.error("Failed to fetch Shopping CartId:", error);
+        }
+      };
+
+      let cartId: any = await getCartId();
 
       const CartDetailsData = {
         id: uuidv4(),
-        cart_id: "35ce281e-5699-4792-915a-081b6a192a62",
+        cart_id: cartId,
         product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
         quantity: 1,
       };

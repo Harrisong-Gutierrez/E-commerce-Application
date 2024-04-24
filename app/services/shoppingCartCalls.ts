@@ -4,7 +4,6 @@ import axios from 'axios';
 export interface ProductData {
     id: string;
     user_id: string;
-    // creation_date: string;
 }
 
 
