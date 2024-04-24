@@ -69,8 +69,8 @@ const Main: React.FC = () => {
     const userId = await getUser();
 
     const purchaseData = {
-      id: "5da61fb2-8caa-4163-8e5d-4873a5b4db11",
-      user_id: "5ef30832-4d1d-4f0d-9e4f-f479ff950372",
+      id: uuidv4(),
+      user_id: userId,
       product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
       purchase_date: "70294d63-be7f-47de-902c-c1a612c363cf",
     };
