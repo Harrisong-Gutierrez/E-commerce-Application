@@ -86,11 +86,16 @@ const Main: React.FC = () => {
       };
 
       let cartId: any = await getCartId();
+      let productId = localStorage.getItem("productId");
+
+      if (!productId) {
+        productId = "";
+      }
 
       const CartDetailsData = {
         id: uuidv4(),
         cart_id: cartId,
-        product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
+        product_id: productId,
         quantity: 1,
       };
 

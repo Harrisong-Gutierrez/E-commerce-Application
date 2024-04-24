@@ -9,8 +9,8 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   const handleClick = () => {
+    localStorage.setItem("productId", product.id);
     onAddToCart(product);
-    console.log(product.id);
   };
 
   return (
