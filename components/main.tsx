@@ -67,18 +67,18 @@ const Main: React.FC = () => {
       }
     }
     const userId = await getUser();
+    const currentDate: Date = new Date();
 
     const purchaseData = {
       id: uuidv4(),
       user_id: userId,
       product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
-      purchase_date: "70294d63-be7f-47de-902c-c1a612c363cf",
+      purchase_date: currentDate.toDateString(),
     };
 
     if (userId) {
       try {
         const result = await addPurchaseHistory(purchaseData);
-        console.log("Purchase history added successfully:", result);
       } catch (error) {
         console.error("Failed to add purchase history:", error);
       }
