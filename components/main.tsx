@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { createClient } from "@/utils/supabase/client";
 import { addShoppingCart } from "@/app/services/shoppingCartCalls";
 import { v4 as uuidv4 } from "uuid";
-import { addPurchaseHistory } from "@/app/services/purchaseHistoryCalls";
+import { addCartDetails } from "@/app/services/cartDetailsCalls";
 
 const Main: React.FC = () => {
   const supabase = createClient();
@@ -74,18 +74,18 @@ const Main: React.FC = () => {
       const userId = await getUser();
       const currentDate: Date = new Date();
 
-      const purchaseData = {
+      const CartDetailsData = {
         id: uuidv4(),
-        user_id: userId,
+        cart_id: "35ce281e-5699-4792-915a-081b6a192a62",
         product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
-        purchase_date: currentDate.toDateString(),
+        quantity: 1,
       };
 
       if (userId) {
         try {
-          const result = await addPurchaseHistory(purchaseData);
+          const result = await addCartDetails(CartDetailsData);
         } catch (error) {
-          console.error("Failed to add purchase history:", error);
+          console.error("Failed to add Cart Details Data:", error);
         }
       }
       toast.success("the product was added to the shopping cart!", {
