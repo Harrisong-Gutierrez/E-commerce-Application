@@ -66,28 +66,28 @@ const Main: React.FC = () => {
         localStorage.setItem("hasAddedToCart", "true");
       }
     }
-    const userId = await getUser();
-    const currentDate: Date = new Date();
-
-    const purchaseData = {
-      id: uuidv4(),
-      user_id: userId,
-      product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
-      purchase_date: currentDate.toDateString(),
-    };
-
-    if (userId) {
-      try {
-        const result = await addPurchaseHistory(purchaseData);
-      } catch (error) {
-        console.error("Failed to add purchase history:", error);
-      }
-    }
 
     const isProductInCart = cart.some((item) => item.id === product.id);
 
     if (!isProductInCart) {
       setCart([...cart, product]);
+      const userId = await getUser();
+      const currentDate: Date = new Date();
+
+      const purchaseData = {
+        id: uuidv4(),
+        user_id: userId,
+        product_id: "cfe12180-4cf7-478d-b6e2-fd9e0e3f663b",
+        purchase_date: currentDate.toDateString(),
+      };
+
+      if (userId) {
+        try {
+          const result = await addPurchaseHistory(purchaseData);
+        } catch (error) {
+          console.error("Failed to add purchase history:", error);
+        }
+      }
       toast.success("the product was added to the shopping cart!", {
         position: "top-center",
         autoClose: 2000,
