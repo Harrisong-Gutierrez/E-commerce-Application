@@ -148,10 +148,6 @@ const Main: React.FC = () => {
     setIsCheckoutOpen(false);
   };
 
-  function handleOrderComplete(order: Order): void {
-    console.log("Pedido completado:", order);
-  }
-
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">E-Commerce App</h1>

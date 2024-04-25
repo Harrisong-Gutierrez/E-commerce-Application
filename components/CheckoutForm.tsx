@@ -14,6 +14,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
 
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [orderstate, setOrderState] = useState("in progress");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
       total: 1,
       shipping_address: shippingAddress,
       payment_method: paymentMethod,
-      order_status: "delivered",
+      order_status: orderstate,
       order_date: "2024-04-24 21:34:50.734013",
     };
 
@@ -57,6 +58,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
       console.error("Failed to add Cart Details Data:", error);
     }
   };
+
+  useEffect(() => {
+    setOrderState("delivered");
+  }, [createOrder]);
 
   return (
     <div className="mt-4">
