@@ -1,7 +1,8 @@
 import { addOrders } from "@/app/services/orderCalls";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-// import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
+import { getShoppingCarts } from "@/app/services/shoppingCartCalls";
 
 interface CheckoutFormProps {
   onConfirm: (address: string, payment: string) => void;
@@ -9,7 +10,7 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
-  // const supabase = createClient();
+  const supabase = createClient();
 
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -19,27 +20,37 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
     onConfirm(shippingAddress, paymentMethod);
   };
 
-  // const getUser = async () => {
-  //   const {
-  //     data: { user },
-  //   } = await supabase.auth.getUser();
-  //   return user?.id as string;
-  // };
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user?.id as string;
+  };
 
-  // const userId = await getUser();
-
-  const OrderDetailsData = {
-    id: uuidv4(),
-    user_id: "a491687f-855d-4eba-8f4f-bac4e173c3f8",
-    cart_id: "3148e94e-9b6b-45dc-bc95-785ddd7ec2b8",
-    total: 1,
-    shipping_address: shippingAddress,
-    payment_method: paymentMethod,
-    order_status: "delivered",
-    order_date: "2024-04-24 21:34:50.734013",
+  const getCartId = async () => {
+    try {
+      const result = await getShoppingCarts();
+      return result[0].id;
+    } catch (error) {
+      console.error("Failed to fetch Shopping CartId:", error);
+    }
   };
 
   const createOrder = async () => {
+    const userId = await getUser();
+    let cartId: any = await getCartId();
+
+    const OrderDetailsData = {
+      id: uuidv4(),
+      user_id: userId,
+      cart_id: cartId,
+      total: 1,
+      shipping_address: shippingAddress,
+      payment_method: paymentMethod,
+      order_status: "delivered",
+      order_date: "2024-04-24 21:34:50.734013",
+    };
+
     try {
       const result = await addOrders(OrderDetailsData);
     } catch (error) {
