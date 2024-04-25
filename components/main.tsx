@@ -148,6 +148,8 @@ const Main: React.FC = () => {
     setIsCheckoutOpen(false);
   };
 
+  const cleanProducts = () => setCart([]);
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">E-Commerce App</h1>
@@ -157,7 +159,11 @@ const Main: React.FC = () => {
         </div>
         <div className="md:col-span-1">
           {isCheckoutOpen ? (
-            <CheckoutProcess cart={cart} onClose={closeCheckout} />
+            <CheckoutProcess
+              cart={cart}
+              onClose={closeCheckout}
+              cleanProducts={cleanProducts}
+            />
           ) : (
             <ShoppingCart
               cart={cart}

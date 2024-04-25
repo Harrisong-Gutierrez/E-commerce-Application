@@ -7,9 +7,14 @@ import { getShoppingCarts } from "@/app/services/shoppingCartCalls";
 interface CheckoutFormProps {
   onConfirm: (address: string, payment: string) => void;
   onClose: () => void;
+  cleanProducts: () => void;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({
+  onConfirm,
+  onClose,
+  cleanProducts,
+}) => {
   const supabase = createClient();
 
   const [shippingAddress, setShippingAddress] = useState("");
@@ -37,7 +42,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
     }
   };
 
+  let cartData = localStorage.getItem("cart");
+
   const createOrder = async () => {
+    console.log(cartData);
     const userId = await getUser();
     let cartId: any = await getCartId();
 
@@ -53,7 +61,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
     };
 
     try {
+      localStorage.removeItem("cart");
       const result = await addOrders(OrderDetailsData);
+      cleanProducts();
     } catch (error) {
       console.error("Failed to add Cart Details Data:", error);
     }

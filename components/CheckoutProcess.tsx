@@ -6,9 +6,14 @@ import { Bounce, toast } from "react-toastify";
 interface CheckoutProcessProps {
   cart: Product[];
   onClose: () => void;
+  cleanProducts: () => void;
 }
 
-const CheckoutProcess: React.FC<CheckoutProcessProps> = ({ cart, onClose }) => {
+const CheckoutProcess: React.FC<CheckoutProcessProps> = ({
+  cart,
+  onClose,
+  cleanProducts,
+}) => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [confirmed, setConfirmed] = useState(false);
@@ -35,7 +40,11 @@ const CheckoutProcess: React.FC<CheckoutProcessProps> = ({ cart, onClose }) => {
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">Checkout Process</h1>
       {!confirmed ? (
-        <CheckoutForm onConfirm={handleConfirm} onClose={onClose} />
+        <CheckoutForm
+          onConfirm={handleConfirm}
+          onClose={onClose}
+          cleanProducts={cleanProducts}
+        />
       ) : (
         <div className="border rounded-lg p-4 bg-white shadow-md">
           <h2 className="text-lg font-semibold mb-4">Purchase Confirmed!</h2>
