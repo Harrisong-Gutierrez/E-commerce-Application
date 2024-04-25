@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import { addOrders } from "@/app/services/orderCalls";
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+// import { createClient } from "@/utils/supabase/client";
 
 interface CheckoutFormProps {
   onConfirm: (address: string, payment: string) => void;
@@ -6,12 +9,42 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
+  // const supabase = createClient();
+
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onConfirm(shippingAddress, paymentMethod);
+  };
+
+  // const getUser = async () => {
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
+  //   return user?.id as string;
+  // };
+
+  // const userId = await getUser();
+
+  const OrderDetailsData = {
+    id: uuidv4(),
+    user_id: "a491687f-855d-4eba-8f4f-bac4e173c3f8",
+    cart_id: "3148e94e-9b6b-45dc-bc95-785ddd7ec2b8",
+    total: 1,
+    shipping_address: shippingAddress,
+    payment_method: paymentMethod,
+    order_status: "delivered",
+    order_date: "2024-04-24 21:34:50.734013",
+  };
+
+  const createOrder = async () => {
+    try {
+      const result = await addOrders(OrderDetailsData);
+    } catch (error) {
+      console.error("Failed to add Cart Details Data:", error);
+    }
   };
 
   return (
@@ -56,6 +89,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ onConfirm, onClose }) => {
         </div>
         <div className="flex justify-between">
           <button
+            onClick={createOrder}
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
