@@ -12,7 +12,7 @@ export const getProducts = async () => {
     }
 };
 
-export const addProduct = async (productData: any) => {
+export const addProduct = async (productData: object) => {
     try {
         const response = await axios.post(`/api/products`, productData);
         return response.data;
@@ -22,7 +22,7 @@ export const addProduct = async (productData: any) => {
     }
 };
 
-export const updateProduct = async (productData: any) => {
+export const updateProduct = async (productData: object) => {
     try {
         const response = await axios.put(`/api/products`, productData);
         return response.data;
@@ -32,7 +32,7 @@ export const updateProduct = async (productData: any) => {
     }
 };
 
-export const deleteProduct = async (productId: any) => {
+export const deleteProduct = async (productId: string) => {
     try {
         const response = await axios.delete(`/api/products`, { data: { id: productId } });
         return response.data;
