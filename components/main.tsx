@@ -150,6 +150,8 @@ const Main: React.FC = () => {
 
   const cleanProducts = () => setCart([]);
 
+  const updateHasAddedToCart = () => setHasAddedToCart(false);
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">E-Commerce App</h1>
@@ -163,6 +165,7 @@ const Main: React.FC = () => {
               cart={cart}
               onClose={closeCheckout}
               cleanProducts={cleanProducts}
+              updateHasAddedToCart={updateHasAddedToCart}
             />
           ) : (
             <ShoppingCart

@@ -7,12 +7,14 @@ interface CheckoutProcessProps {
   cart: Product[];
   onClose: () => void;
   cleanProducts: () => void;
+  updateHasAddedToCart: () => void;
 }
 
 const CheckoutProcess: React.FC<CheckoutProcessProps> = ({
   cart,
   onClose,
   cleanProducts,
+  updateHasAddedToCart,
 }) => {
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -44,6 +46,7 @@ const CheckoutProcess: React.FC<CheckoutProcessProps> = ({
           onConfirm={handleConfirm}
           onClose={onClose}
           cleanProducts={cleanProducts}
+          updateHasAddedToCart={updateHasAddedToCart}
         />
       ) : (
         <div className="border rounded-lg p-4 bg-white shadow-md">

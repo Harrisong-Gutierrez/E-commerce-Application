@@ -8,12 +8,14 @@ interface CheckoutFormProps {
   onConfirm: (address: string, payment: string) => void;
   onClose: () => void;
   cleanProducts: () => void;
+  updateHasAddedToCart: () => void;
 }
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
   onConfirm,
   onClose,
   cleanProducts,
+  updateHasAddedToCart,
 }) => {
   const supabase = createClient();
 
@@ -64,6 +66,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       localStorage.removeItem("cart");
       const result = await addOrders(OrderDetailsData);
       cleanProducts();
+      localStorage.setItem("hasAddedToCart", "false");
+      updateHasAddedToCart();
     } catch (error) {
       console.error("Failed to add Cart Details Data:", error);
     }
@@ -72,6 +76,10 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
   useEffect(() => {
     setOrderState("delivered");
   }, [createOrder]);
+
+  useEffect(() => {
+    createOrder();
+  }, []);
 
   return (
     <div className="mt-4">
@@ -135,3 +143,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 };
 
 export default CheckoutForm;
+function setHasAddedToCart(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
